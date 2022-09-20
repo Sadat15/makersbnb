@@ -6,7 +6,7 @@ INSERT INTO users (name, email, password) VALUES
 ('Anna', 'anna@world.com', '$2a$12$YlqyPMdbTUMCOiISU834D.mXHMzrpBTIjDGbJwTAr5B/49ZViTAGK'),
 -- real password is 'appletree'
 ('David', 'david@london.com', '$2a$12$iAcq.9qSDIrl6JYE/tyPzeMcuq/hYq1Iem8QXMh3zZrLEp/5l54Rq');
--- real passwors is 'citylife'
+-- real password is 'citylife'
 
 INSERT INTO spaces (name, description, price_per_night, dates, user_id) VALUES
 ('House', 'Lovely house at the seaside', 80, '{"2022-10-05", "2022-10-07", "2022-11-15"}', 2),
