@@ -15,7 +15,7 @@ class SpaceRepository
       space.description = record['description']
       space.name = record['name']
       space.price_per_night = record['price_per_night']
-      space.date_range = record['date_range']
+      space.dates = record['dates']
 
       all_spaces << space
     end
@@ -23,8 +23,8 @@ class SpaceRepository
   end
 
   def add(space)
-    sql = 'INSERT INTO spaces (user_id, description, name, price_per_night, date_range) VALUES ($1, $2, $3, $4, $5)'
-    sql_params = [space.user_id, space.description, space.name, space.price_per_night, space.date_range]
+    sql = 'INSERT INTO spaces (user_id, description, name, price_per_night, dates) VALUES ($1, $2, $3, $4, $5)'
+    sql_params = [space.user_id, space.description, space.name, space.price_per_night, space.dates]
     DatabaseConnection.exec_params(sql, sql_params)
   end
 
@@ -36,7 +36,7 @@ class SpaceRepository
     space.name = result_set[0]['name']
     space.description = result_set[0]['description']
     space.price_per_night = result_set[0]['price_per_night']
-    space.date_range = result_set[0]['date_range']
+    space.dates = result_set[0]['dates']
     return space
   end
 
