@@ -1,5 +1,6 @@
 require_relative './database_connection'
-require_relative 'space'
+require_relative './space'
+
 
 class SpaceRepository
 
@@ -18,9 +19,7 @@ class SpaceRepository
 
       all_spaces << space
     end
-
     return all_spaces
-
   end
 
   def add(space)
@@ -29,4 +28,24 @@ class SpaceRepository
     DatabaseConnection.exec_params(sql, sql_params)
   end
 
+  def find_by_id(id)
+    sql = 'SELECT * FROM spaces WHERE id = $1;'
+    result_set = DatabaseConnection.exec_params(sql, [id])
+    space = Space.new
+    space.id = result_set[0]['id']
+    space.name = result_set[0]['name']
+    space.description = result_set[0]['description']
+    space.price_per_night = result_set[0]['price_per_night']
+    space.date_range = result_set[0]['date_range']
+    return space
+  end
+
+  def delete(id)
+    sql = 'DELETE FROM spaces WHERE id = $1;'
+    DatabaseConnection.exec_params(sql, [id])
+  end
+
+  def update_avail(id, date)
+    # need to do!
+  end
 end
