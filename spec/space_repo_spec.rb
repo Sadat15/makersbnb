@@ -1,10 +1,16 @@
 require 'space_repository'
 require 'database_connection'
-require_relative './reset_tables'
+# require_relative './reset_tables'
+
+def reset_tables
+  seed_sql = File.read('spec/seeds/seeds.sql')
+  connection = PG.connect({ host: '127.0.0.1', dbname: 'makersbnb_test'})
+  connection.exec(seed_sql)
+end
 
 describe SpaceRepository do 
-  before(:each) do
-    ResetTables.new.reset
+  before(:each) do 
+    reset_tables
   end
 
   it "lists all available spaces" do
@@ -15,7 +21,7 @@ describe SpaceRepository do
     expect(spaces.first.name).to eq 'House'
     expect(spaces.first.description).to eq 'Lovely house at the seaside'
     expect(spaces.first.price_per_night).to eq '80'
-    expect(spaces.first.dates).to eq '{"2022-10-05", "2022-10-07", "2022-11-15"}'
+    expect(spaces.first.dates).to eq '{2022-10-05,2022-10-07,2022-11-15}'
     expect(spaces.length).to eq 3
   end
 
@@ -37,8 +43,8 @@ describe SpaceRepository do
     repo = SpaceRepository.new
     space = repo.find_by_id('1')
     expect(space.id).to eq '1'
-    expect(space.name).to eq ''
-    expect(space.dates).to eq ''
+    expect(space.name).to eq 'House'
+    expect(space.dates).to eq '{2022-10-05,2022-10-07,2022-11-15}'
   end
 
   it "deletes the space by its id" do
@@ -46,10 +52,10 @@ describe SpaceRepository do
     repo.delete('1')
     expect(repo.all.length).to eq 2
     expect(repo.all.first.id).to eq '2'
-    expect(repo.all.first.name).to eq ''
+    expect(repo.all.first.name).to eq 'Flat'
   end
 
-  it "updates the date range of a given space" do
+  xit "updates the date range of a given space" do
     repo = SpaceRepository.new
     repo.update_avail('1', '???')
     space = repo.find_by_id('1')
