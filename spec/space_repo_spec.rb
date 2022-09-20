@@ -44,14 +44,14 @@ describe SpaceRepository do
   it "deletes the space by its id" do
     repo = SpaceRepository.new
     repo.delete('1')
-    expect(repo.all.length).to eq
+    expect(repo.all.length).to eq 2
     expect(repo.all.first.id).to eq '2'
     expect(repo.all.first.name).to eq ''
   end
 
   it "updates the date range of a given space" do
     repo = SpaceRepository.new
-    repo.update_avail('1', '2022-10-12')
+    repo.update_avail('1', '???')
     space = repo.find_by_id('1')
     expect(space.dates).to eq
   end
