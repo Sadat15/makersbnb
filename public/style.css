@@ -1,3 +1,35 @@
 body {
     font-size: 18px;
+    background-color: skyblue;
 }
+
+p {
+    font-size: 18px;
+    color: black;
+}
+
+.main-title {
+    font-size: 75px;
+    color: red;
+    background-color: white;
+    text-align: center;    
+}
+
+.footer-makersbnb {
+    font-size: 25px;
+    color: red;
+    background-color: white;
+    text-align: center;
+}
+
+.login-bar {
+    font-size: 25px;
+    color: white;
+    background-color: grey;
+    text-align: right;
+}
+
+a {
+    text-decoration: none;
+    color: red;
+  }
