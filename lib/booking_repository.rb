@@ -10,6 +10,20 @@ class BookingRepository
     return false if str == 'f'
   end
   
+  def find_by_id(id)
+    sql = 'SELECT * FROM bookings WHERE id = $1;'
+    sql_params = [id]
+    result_set = DatabaseConnection.exec_params(sql, sql_params)
+    booking = Booking.new
+    booking.id = result_set[0]['id']
+    booking.user_id = result_set[0]['user_id']
+    booking.space_id = result_set[0]['space_id']
+    booking.date = result_set[0]['date']
+    booking.confirmed = to_boolean(result_set[0]['confirmed'])
+
+    return booking
+  end
+
   def find_by_user_id(user_id)
     sql = 'SELECT * FROM bookings WHERE user_id = $1;'
     sql_params = [user_id]
@@ -27,6 +41,7 @@ class BookingRepository
     end
     return all_bookings
   end
+
   def find_by_space_id(space_id)
     sql = 'SELECT * FROM bookings WHERE space_id = $1;'
     sql_params = [space_id]
@@ -48,6 +63,13 @@ class BookingRepository
   def create(booking)
     sql = 'INSERT INTO bookings (user_id, space_id, date, confirmed) VALUES ($1, $2, $3, $4);'
     sql_params = [booking.user_id, booking.space_id, booking.date, false]
+    DatabaseConnection.exec_params(sql, sql_params)
+    return nil
+  end
+
+  def confirm(booking_id)
+    sql = "UPDATE bookings SET confirmed = true WHERE bookings.id = $1;"
+    sql_params = [booking_id]
     DatabaseConnection.exec_params(sql, sql_params)
     return nil
   end
