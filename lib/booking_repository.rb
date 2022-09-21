@@ -16,9 +16,9 @@ class BookingRepository
     result_set = DatabaseConnection.exec_params(sql, sql_params)
     booking = Booking.new
     booking.id = result_set[0]['id']
+    booking.date = result_set[0]['date']
     booking.user_id = result_set[0]['user_id']
     booking.space_id = result_set[0]['space_id']
-    booking.date = result_set[0]['date']
     booking.confirmed = to_boolean(result_set[0]['confirmed'])
 
     return booking
@@ -32,9 +32,9 @@ class BookingRepository
     result_set.each do |record|
       booking = Booking.new
       booking.id = record['id']
+      booking.date = record['date']
       booking.user_id = record['user_id']
       booking.space_id = record['space_id']
-      booking.date = record['date']
       booking.confirmed = to_boolean(record['confirmed'])
 
       all_bookings << booking
@@ -50,9 +50,9 @@ class BookingRepository
     result_set.each do |record|
       booking = Booking.new
       booking.id = record['id']
+      booking.date = record['date']
       booking.user_id = record['user_id']
       booking.space_id = record['space_id']
-      booking.date = record['date']
       booking.confirmed = to_boolean(record['confirmed'])
 
       all_bookings << booking
@@ -61,8 +61,8 @@ class BookingRepository
   end
 
   def create(booking)
-    sql = 'INSERT INTO bookings (user_id, space_id, date, confirmed) VALUES ($1, $2, $3, $4);'
-    sql_params = [booking.user_id, booking.space_id, booking.date, false]
+    sql = 'INSERT INTO bookings (date, user_id, space_id, confirmed) VALUES ($1, $2, $3, $4);'
+    sql_params = [booking.date, booking.user_id, booking.space_id, false]
     DatabaseConnection.exec_params(sql, sql_params)
     return nil
   end
