@@ -7,6 +7,6 @@ class Application < Sinatra::Base
   end
 
   get '/' do
-    return erb(:index)
+    erb :index
   end
 end
