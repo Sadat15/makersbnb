@@ -20,24 +20,25 @@ class UserRepository
     end
 
     return users
-
   end
 
   def find_by_email(email)
     # Returns a specified user object
     sql = 'SELECT * FROM users WHERE email = $1;'
-    params = [id]
+    params = [email]
 
     result_set = DatabaseConnection.exec_params(sql, params)
 
     user = User.new
+
+    record = result_set[0]
+
     user.id = record['id']
     user.name = record['name']
     user.email = record['email']
     user.password = record['password']
 
     return user
-
   end
     
   def create(user)
@@ -50,6 +51,7 @@ class UserRepository
 
     DatabaseConnection.exec_params(sql, params)
 
+    return nil
   end
 
   def sign_in(submitted_email, submitted_password)
@@ -57,7 +59,8 @@ class UserRepository
 
     return nil if user.nil?
 
-    hash_check = BCrypt::Password.new(user.password)
+    # user.password in next line is the encrypted password in the database
+    hash_check = BCrypt::Password.new(user.password) 
 
     if hash_check == submitted_password      
       return "successful"
