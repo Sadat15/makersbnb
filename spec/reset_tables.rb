@@ -1,3 +1,5 @@
+
+
 class ResetTables # for RSpec tests
   def reset
     seed_sql = File.read('spec/seeds/seeds.sql')
@@ -13,3 +15,4 @@ class ResetTables # for RSpec tests
     connection.exec(seed_sql)
   end
 end
+
