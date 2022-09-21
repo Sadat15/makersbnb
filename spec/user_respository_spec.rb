@@ -11,45 +11,47 @@ describe UserRepository do
     repo = UserRepository.new
     users = repo.all
     
-    expect(users.length).to eq()
-    expect(users.first.id).to eq()
-    expect(users.first.name).to eq()
-    expect(users.first.email).to eq()
-    expect(users.first.password).to eq(# encrypted password)
+    expect(users.length).to eq(3)
+    expect(users.first.id).to eq('1')
+    expect(users.first.name).to eq('Jonas')
+    expect(users.first.email).to eq('jonas@somewhere.com')
+    expect(users.first.password).to eq(
+      '$2a$12$4V/xPwwTy/Y4itSd2GjY7OqmB4EN3z5p.JcWkBagoN2TUqjYeTGI6'
+      )
   end
 
   it '#find finds one user specified by email' do
     repo = UserRepository.new    
-    user = repo.find_by_email()
+    user = repo.find_by_email('anna@world.com')
     
-    expect(user.id).to eq()
-    expect(user.name).to eq()
-    expect(user.email).to eq()
-    expect(user.password).to eq(# encrypted password)
+    expect(user.id).to eq('2')
+    expect(user.name).to eq('Anna')
+    expect(user.email).to eq('anna@world.com')
+    expect(user.password).to eq('$2a$12$YlqyPMdbTUMCOiISU834D.mXHMzrpBTIjDGbJwTAr5B/49ZViTAGK')
   end
 
   it '#create creates a user' do
     repo = UserRepository.new
     user = User.new
-    user.name = ()
-    user.email = ()
-    user.password = ()
+    user.name = ('Bob')
+    user.email = ('bob@mortimer.com')
+    user.password = ('password')
     repo.create(user)
     users = repo.all
 
-    expect(users.length).to eq()
-    expect(users.last.id).to eq()
-    expect(users.last.name).to eq()
-    expect(users.last.email).to eq()
-    expect(users.last.password).not_to eq()
+    expect(users.length).to eq(4)
+    expect(users.last.id).to eq(4)
+    expect(users.last.name).to eq('Bob')
+    expect(users.last.email).to eq('bob@mortimer.com')
+    expect(users.last.password).not_to eq('password')
   end
 
   it '#sign_in confirms user submitted password is valid (via BCrypt) based on encrypted password in database' do
     repo = UserRepository.new    
     user = User.new
-    user.name = ()
-    user.email = ()
-    user.password = ()
+    user.name = ('Gary')
+    user.email = ('gary@example.com')
+    user.password = ('passowrd')
     repo.create(user)
     result = repo.sign_in(user.email, user.password)
 
