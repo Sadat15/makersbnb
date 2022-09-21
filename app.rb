@@ -7,6 +7,8 @@ class Application < Sinatra::Base
   end
 
   get '/' do
+    repo = SpaceRepository.new
+    @spaces = repo.all
     return erb(:index)
   end
 end
