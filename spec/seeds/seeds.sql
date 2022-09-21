@@ -15,4 +15,5 @@ INSERT INTO spaces (name, description, price_per_night, dates, user_id) VALUES
 
 INSERT INTO bookings (date, user_id, space_id, confirmed) VALUES
 ('2022-10-05', 1, 1, true),
-('2022-10-02', 2, 3, true);
+('2022-10-07', 3, 1, true),
+('2022-10-02', 2, 3, false);
