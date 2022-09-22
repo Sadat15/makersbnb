@@ -1,5 +1,5 @@
-require "booking"
-require "database_connection"
+require_relative './database_connection'
+require_relative './booking'
 require "date"
 
 class BookingRepository

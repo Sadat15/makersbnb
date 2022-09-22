@@ -1,7 +1,6 @@
 require_relative './database_connection'
 require_relative './space'
 
-
 class SpaceRepository
 
   # this method doesn't return places that haven't got dates they are available
