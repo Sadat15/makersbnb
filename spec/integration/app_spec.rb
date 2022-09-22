@@ -25,4 +25,10 @@ describe Application do
       expect(response.status).to eq(200)
     end
   end
+
+  context 'GET /account' do
+    it 'should return the account page' do
+      response = get('/account')
+      expect(response.status).to eq (200)
+    end
 end
