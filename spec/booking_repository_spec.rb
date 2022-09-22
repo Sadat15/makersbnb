@@ -57,4 +57,16 @@ describe BookingRepository do
     expect(result_before.confirmed).to eq false
     expect(result_after.confirmed).to eq true
   end
+
+  it "updates dates available after a booking has been confirmed" do
+    repo = BookingRepository.new
+    result_before = repo.find_by_id('3')
+    repo.confirm('3')
+    result_after = repo.find_by_id('3')
+    expect(result_before.confirmed).to eq false
+    expect(result_before.confirmed).to eq true
+    expect()
+
+  end
+
 end

@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 require_relative './database_connection'
 require_relative './booking'
 require "date"
+=======
+require_relative "./booking"
+require_relative "./database_connection"
+>>>>>>> 6cdd14b (Sign up page working)
 
 class BookingRepository
 
@@ -75,4 +80,6 @@ class BookingRepository
     DatabaseConnection.exec_params(sql, sql_params)
     return nil
   end
+  
+
 end

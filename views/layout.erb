@@ -41,8 +41,8 @@
     a {
     text-decoration: none;
     color: red;
-}
-    
+  }  
+
   </style>
   
   </head>
@@ -51,12 +51,14 @@
   
 
     <header>
-      <div class="main-brand"><a href="/">MakersBnB</a></div>
-        <div class="login-bar">[insert sign up / log in / log out]</div>
+        <div class="main-brand"><a href="/">MakersBnB</a></div>
+        <div class="login-bar"><a href="/signup"><button>Sign up</button></a><a href="/login"><button>Log in/Log out</button></a></div>
         <p style="color: red;">quick test this should be red</p>
     </header>
 
+    <div>
     <%= yield %>
+    </div>
 
     <footer>
         <div class="footer-makersbnb">MakersBnB</div>
