@@ -32,6 +32,13 @@ describe UserRepository do
       )
   end
 
+  it '#find returns nil if email doesnt exist' do
+    repo = UserRepository.new    
+    user = repo.find_by_email('anna3@world.com')
+    expect(user).to eq nil
+
+  end
+
   it '#create creates a user' do
     repo = UserRepository.new
     user = User.new

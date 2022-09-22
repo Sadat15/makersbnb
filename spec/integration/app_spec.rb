@@ -56,12 +56,39 @@ describe Application do
     end
   end
 
-  context 'GET /signup' do
-    it "displays a sign-up page" do
-      response = get('/signup')
+  context 'GET /login' do
+    it "displays a login page" do
+      response = get('/login')
       expect(response.status).to eq 200
-      expect(response.body).to include ("<form action='POST' method='/signup'>")
-      expect(response.body).to include ("<input type='text' name='name'>")
+      expect(response.body).to include ("<form action='/login' method='POST'>")
+      expect(response.body).to include ("<input type='email' name='email' placeholder='Your email'>")
+      expect(response.body).to include ("<input type='password' name='password' placeholder='Your password'>")
+    end
+  end
+
+  context 'POST /login' do
+    it "sends and checks the login information" do
+      response = post(
+        '/login',
+        email: 'jonas@somewhere.com',
+        password: 'lovelyday'
+        )
+      follow_redirect!
+      expect(last_response.status).to be 200
+      expect(last_response.body).to include("Lovely house at the seaside")
+      # expect(response.body).to include("Sign out")
+    end
+
+    it "sends and checks the login information" do
+      response = post(
+        '/login',
+        email: 'jonas@somewhere.com',
+        password: 'lovelyday123'
+        )
+      follow_redirect!
+      expect(last_response.status).to be 200
+      expect(last_response.body).to include("Error, please try again")
+      expect(last_response.body).to include ("<input type='email' name='email' placeholder='Your email'>")
     end
   end
 end

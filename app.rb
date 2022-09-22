@@ -41,9 +41,24 @@ class Application < Sinatra::Base
     return erb(:request_sent)
   end
 
-  get '/signup' do
-    return erb(:signup)
+  get '/login' do
+    if params[:error] == 'credentials_wrong'
+      @error = true
+    end
+    return erb(:login)
   end
 
+  post '/login' do
+    repo = UserRepository.new
+    result = repo.sign_in(params[:email], params[:password])
+    
+    if result == "successful"
+      user = repo.find_by_email(params[:email])
+      session[:user_id] = user.id
+      redirect '/'
+    else
+      redirect '/login?error=credentials_wrong'
+    end
+  end
 
 end
