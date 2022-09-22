@@ -1,8 +1,6 @@
 require "booking"
 require "database_connection"
 
-
-
 class BookingRepository
 
   def to_boolean(str)
