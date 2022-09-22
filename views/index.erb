@@ -1,2 +1,8 @@
-<p>This is index.erb</p>
-<p>Using layout.erb for the head and footer content.</p>
+<div>
+    <% @spaces.each do |space| %>
+        <p><%= space.name %></p>
+        <p><%= space.description %></p>
+        <p>Price per night is £<%= space.price_per_night %></p>
+        <p><a href="/space/<%=space.id%>">Book now</a></p>
+    <% end %> 
+</div>
