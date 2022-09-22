@@ -1,3 +1,6 @@
+require_relative '../../app.rb'
+require 'rack/test'
+
 def reset_tables
   seed_sql = File.read('spec/seeds/seeds.sql')
   connection = PG.connect({ host: '127.0.0.1', dbname: 'makersbnb_test'})
@@ -30,8 +33,6 @@ describe Application do
       expect(response.body).to include("Flat in Central London")
       expect(response.body).to include("Room in terraced house")
       expect(response.body).to include("Lovely house at the seaside")
-      expect(response.body).to include('<a href="/login">Login</a>')
-      expect(response.body).to include('<a href="/signup">Sign-up</a>')
     end
   end
 
@@ -42,7 +43,8 @@ describe Application do
       expect(response.body).to include('<h1>House by 2</h1>')
       expect(response.body).to include('<p>Description: Lovely house at the seaside</p>')
       expect(response.body).to include('<p>Price per night: £80</p>')
-      expect(response.body).to include('<p>Dates available: 2022-10-05, 2022-10-07, 2022-11-15</p>')
+      expect(response.body).to include('Dates available:')
+      expect(response.body).to include('2022-10-05')
     end
   end 
 
@@ -51,6 +53,15 @@ describe Application do
       response = post('/book_space', date: '2022-10-05', user_id: 1, space_id: 1)
       expect(response.status).to eq(200)
       expect(response.body).to include('<p>Booking request sent successfully. Please await confirmation by the host.</p>')
+    end
+  end
+
+  context 'GET /signup' do
+    it "displays a sign-up page" do
+      response = get('/signup')
+      expect(response.status).to eq 200
+      expect(response.body).to include ("<form action='POST' method='/signup'>")
+      expect(response.body).to include ("<input type='text' name='name'>")
     end
   end
 end

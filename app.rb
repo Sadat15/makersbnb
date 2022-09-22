@@ -8,13 +8,15 @@ require_relative 'lib/booking'
 require_relative 'lib/booking_repository'
 require_relative 'lib/database_connection'
 
-DatabaseConnection.connect('makersbnb')
+DatabaseConnection.connect('makersbnb_test')
 
 
 class Application < Sinatra::Base
   configure :development do
     register Sinatra::Reloader
   end
+
+  enable :sessions
 
   get '/' do
     repo = SpaceRepository.new
@@ -38,5 +40,10 @@ class Application < Sinatra::Base
     repo.create(booking)
     return erb(:request_sent)
   end
+
+  get '/signup' do
+    return erb(:signup)
+  end
+
 
 end
