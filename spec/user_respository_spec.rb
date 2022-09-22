@@ -42,7 +42,7 @@ describe UserRepository do
     users = repo.all
 
     expect(users.length).to eq(4)
-    expect(users.last.id).to eq(4)
+    expect(users.last.id).to eq('4')
     expect(users.last.name).to eq('Bob')
     expect(users.last.email).to eq('bob@mortimer.com')
     expect(users.last.password).not_to eq('password')
