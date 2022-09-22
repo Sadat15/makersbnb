@@ -24,7 +24,7 @@ class Application < Sinatra::Base
 
   get '/space/:id' do
     repo = SpaceRepository.new
-    @space = repo.find_by_id(params[:id])
+    @space = repo.find_by_id_with_dates(params[:id])
     return erb(:space)
   end
 
