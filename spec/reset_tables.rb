@@ -8,9 +8,9 @@ class ResetTables # for RSpec tests
     # password = ENV['PGPASSWORD']
     connection = PG.connect({ 
       host: '127.0.0.1',
-      dbname: 'makersbnb',
-      user: user,
-      password: password 
+      dbname: 'makersbnb_test',
+      # user: user,
+      # password: password 
     })
     connection.exec(seed_sql)
   end

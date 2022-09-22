@@ -46,7 +46,7 @@ class UserRepository
     # Returns nothing
     encrypted_password = BCrypt::Password.create(user.password)
 
-    sql = 'INSERT INTO users (name, password, email) VALUES ($1, $2, £3)'
+    sql = 'INSERT INTO users (name, password, email) VALUES ($1, $2, $3);'
     params = [user.name, encrypted_password, user.email]
 
     DatabaseConnection.exec_params(sql, params)
