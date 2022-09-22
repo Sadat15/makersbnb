@@ -41,7 +41,7 @@ describe BookingRepository do
     booking = Booking.new
     booking.user_id = '2'
     booking.space_id = '2'
-    booking.date = '2022-10-25'
+    booking.date_id = '33'
     repo.create(booking)
     result = repo.find_by_user_id('2')
     expect(result.length).to eq 2

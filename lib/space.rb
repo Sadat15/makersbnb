@@ -2,4 +2,8 @@
 
 class Space 
   attr_accessor :id, :user_id, :name, :description, :price_per_night, :dates
+  
+  def initialize
+    @dates = {}
+  end
 end
