@@ -21,6 +21,9 @@ class Application < Sinatra::Base
   get '/' do
     repo = SpaceRepository.new
     @spaces = repo.all
+    if session[:user_id] != nil
+      @session = session[:user_id]
+    end
     return erb(:index)
   end
 
@@ -51,7 +54,6 @@ class Application < Sinatra::Base
   post '/login' do
     repo = UserRepository.new
     result = repo.sign_in(params[:email], params[:password])
-    
     if result == "successful"
       user = repo.find_by_email(params[:email])
       session[:user_id] = user.id

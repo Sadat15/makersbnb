@@ -3,64 +3,37 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MakersBnB</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <title>MakersBnB</title>
     <style>
-    body {
-    font-size: 18px;
-    background-color: skyblue;
-}
 
-    p {
-    font-size: 18px;
-    color: black;
-}
-
-    .main-brand {
-    font-size: 75px;
-    color: red;
-    background-color: white;
-    text-align: center;    
-}
-
-    .footer-makersbnb {
-    font-size: 25px;
-    color: red;
-    background-color: white;
-    text-align: center;
-}
-
-    .login-bar {
-    font-size: 25px;
-    color: white;
-    background-color: grey;
-    text-align: right;
-}
-
-    a {
-    text-decoration: none;
-    color: red;
-}
-    
-  </style>
-  
+    </style>
   </head>
   <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6"><h1><a class="navbar-brand" href="/">
+          <img src="https://cdn-images-1.medium.com/max/184/1*_4wxgtAqxKdaJQ7kcUsvlw@2x.png" width="42" height="42" class="d-inline-block" alt="">
+          MakersBnb
+          </a></h1></div>
+        <div class="col-md-2">
+          <% if @session == nil %>
+            <a href="/signup" class="btn btn-danger">Sign up</a>
+            <a href="/login" class="btn btn-danger">Log in</a>
+          <% else %>
+            <a href="/account" class="btn btn-danger">Account</a>
+            <a href="/logout" class="btn btn-danger">Log out</a>
+          <% end %>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
 
-  
-
-    <header>
-      <div class="main-brand"><a href="/">MakersBnB</a></div>
-        <div class="login-bar">[insert sign up / log in / log out]</div>
-        <p style="color: red;">quick test this should be red</p>
-    </header>
 
     <%= yield %>
 
-    <footer>
-        <div class="footer-makersbnb">MakersBnB</div>
-    </footer>
-    
+
+    <script src="https://unpkg.com/@popperjs/core@2.4.0/dist/umd/popper.min.js"></script>
   </body>
 </html>
