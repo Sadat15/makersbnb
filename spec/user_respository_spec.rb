@@ -27,7 +27,9 @@ describe UserRepository do
     expect(user.id).to eq('2')
     expect(user.name).to eq('Anna')
     expect(user.email).to eq('anna@world.com')
-    expect(user.password).to eq('$2a$12$YlqyPMdbTUMCOiISU834D.mXHMzrpBTIjDGbJwTAr5B/49ZViTAGK')
+    expect(user.password).to eq(
+      '$2a$12$YlqyPMdbTUMCOiISU834D.mXHMzrpBTIjDGbJwTAr5B/49ZViTAGK'
+      )
   end
 
   it '#create creates a user' do

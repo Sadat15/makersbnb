@@ -1,16 +1,9 @@
 require 'space_repository'
-require 'database_connection'
-# require_relative './reset_tables'
-
-def reset_tables
-  seed_sql = File.read('spec/seeds/seeds.sql')
-  connection = PG.connect({ host: '127.0.0.1', dbname: 'makersbnb_test'})
-  connection.exec(seed_sql)
-end
+require_relative './reset_tables'
 
 describe SpaceRepository do 
   before(:each) do 
-    reset_tables
+    ResetTables.new.reset
   end
 
   it "lists all available spaces" do
@@ -90,4 +83,3 @@ describe SpaceRepository do
     expect(space.dates).to eq
   end
 end
-

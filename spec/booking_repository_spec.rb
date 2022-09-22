@@ -1,13 +1,9 @@
 require "booking_repository.rb" 
-def reset_tables
-  seed_sql = File.read('spec/seeds/seeds.sql')
-  connection = PG.connect({ host: '127.0.0.1', dbname: 'makersbnb_test'})
-  connection.exec(seed_sql)
-end
-  
+require_relative "./reset_tables"
+
 describe BookingRepository do 
   before(:each) do 
-    reset_tables
+    ResetTables.new.reset
   end
 
   it "finds booking by its id" do

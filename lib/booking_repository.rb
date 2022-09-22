@@ -2,8 +2,6 @@ require "booking"
 require "database_connection"
 require "date"
 
-
-
 class BookingRepository
 
   def to_boolean(str)
