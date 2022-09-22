@@ -39,7 +39,10 @@ describe Application do
   #   it 'should return the account page' do
   #     response = get('/account')
   #     expect(response.status).to eq (200)
+  #     expect(response.body).to include('<p>Lovely house at the seaside</p>')
   #   end
+  # end
+
   context 'GET /space/:id' do
     it "should return a space listing by finding the id" do
       response = get('/space/1')
