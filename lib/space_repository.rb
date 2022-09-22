@@ -34,11 +34,31 @@ class SpaceRepository
     result_set = DatabaseConnection.exec_params(sql, [id])
     space = Space.new
     space.id = result_set[0]['id']
+    space.user_id = result_set[0]['user_id']
     space.name = result_set[0]['name']
     space.description = result_set[0]['description']
     space.price_per_night = result_set[0]['price_per_night']
     space.dates = result_set[0]['dates']
     return space
+  end
+
+  def find_by_user_id(user_id)
+    sql = 'SELECT * FROM spaces WHERE user_id = $1;'
+    sql_params= [user_id]
+    spaces = []
+    result_set = DatabaseConnection.exec_params(sql, sql_params)
+    result_set.each do |row|
+      space = Space.new
+      space.id = row['id']
+      space.user_id = row['user_id']
+      space.name = row['name']
+      space.description = row['description']
+      space.price_per_night = row['price_per_night']
+      space.dates = row['dates']
+
+      spaces << space
+    end
+    return spaces
   end
 
   def delete(id)

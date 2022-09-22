@@ -40,7 +40,7 @@ describe UserRepository do
     users = repo.all
 
     expect(users.length).to eq(4)
-    expect(users.last.id).to eq(4)
+    expect(users.last.id).to eq('4')
     expect(users.last.name).to eq('Bob')
     expect(users.last.email).to eq('bob@mortimer.com')
     expect(users.last.password).not_to eq('password')
@@ -56,5 +56,12 @@ describe UserRepository do
     result = repo.sign_in(user.email, user.password)
 
     expect(result).to eq("successful")
+  end
+
+  it 'finds user by id' do
+    repo = UserRepository.new
+    result = repo.find_by_user_id(1)
+    expect(result.name).to eq "Jonas"
+    expect(result.email).to eq "jonas@somewhere.com"
   end
 end

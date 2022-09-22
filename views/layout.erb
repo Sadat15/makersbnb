@@ -2,14 +2,27 @@
 <html>
     <head>
         <title>MakersBnB</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/dubrox/Multiple-Dates-Picker-for-jQuery-UI@master/jquery-ui.multidatespicker.js"></script>
+        
+        <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
         <link href="<%= url('/style.css') %>" rel="stylesheet" type="text/css" />
-        <div class="main-title"><a href="/">MakersBnB</div>
-        <div class="login-bar"> Depending on session status: Sign in Log in / Log Out</div>
+
     </head>
     <body>
+        <header>
+            <div class="main-title"><a href="/">MakersBnB</a></div>
+            <div class="login-bar"> Depending on session status: Sign in Log in / Log Out</div>
+        </header>
         <%= yield %>
+        <footer>
+            <div class="footer-makersbnb">MakersBnB</div>
+        </footer>
+        <script>
+            $(document).ready(function () {
+                $('#datePick').multiDatesPicker();
+            });
+        </script>
     </body>
-    <footer>
-        <div class="footer-makersbnb">MakersBnB</div>
-    </footer>
 </html>
