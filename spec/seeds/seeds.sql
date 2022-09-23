@@ -270,6 +270,14 @@ INSERT INTO dates (date) VALUES
 ('2023-05-30'),
 ('2023-05-31');
 
+INSERT INTO bookings (date_id, user_id, space_id, confirmed) VALUES
+-- actual date is '2022-10-05'
+(14, 1, 1, true),
+-- actual date is '2022-10-07'
+(16, 3, 1, true),
+-- actual date is '2022-10-02'
+(11, 2, 3, false);
+
 INSERT INTO spaces_dates (space_id, date_id) VALUES
 (1, 14),
 (1, 16),

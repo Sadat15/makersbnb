@@ -1,6 +1,7 @@
-
 require_relative './database_connection'
 require_relative './booking'
+require "date"
+
 
 
 class BookingRepository
@@ -76,4 +77,6 @@ class BookingRepository
     DatabaseConnection.exec_params(sql, sql_params)
     return nil
   end
+  
+
 end

@@ -1,28 +1,69 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>MakersBnB</title>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <title>MakersBnB</title>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
         <script src="https://cdn.jsdelivr.net/gh/dubrox/Multiple-Dates-Picker-for-jQuery-UI@master/jquery-ui.multidatespicker.js"></script>
         
         <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
-        <link href="<%= url('/style.css') %>" rel="stylesheet" type="text/css" />
+    
+    
+    <style>
+      .card-columns {
+    -webkit-column-count: 2 !important;
+    -moz-column-count: 2 !important;
+    column-count: 2 !important;
+    -webkit-column-gap: 1.25rem;
+    -moz-column-gap: 1.25rem;
+    column-gap: 1.25rem
+    }
 
-    </head>
-    <body>
-        <header>
-            <div class="main-title"><a href="/">MakersBnB</a></div>
-            <div class="login-bar"> Depending on session status: Sign in Log in / Log Out</div>
-        </header>
-        <%= yield %>
-        <footer>
-            <div class="footer-makersbnb">MakersBnB</div>
-        </footer>
-        <script>
+    .home_button {
+    min-width: 80px;
+    max-width: 80px;
+    }
+    </style>
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-6"><h1><a class="navbar-brand" href="/">
+          <img src="https://cdn-images-1.medium.com/max/184/1*_4wxgtAqxKdaJQ7kcUsvlw@2x.png" width="42" height="42" class="d-inline-block" alt="">
+          MakersBnb
+          </a></h1></div>
+        <div class="col-md-2">
+          <% if @session == nil %>
+            <a href="/signup" class="btn btn-danger">Sign up</a>
+            <a href="/login" class="btn btn-danger">Log in</a>
+          <% else %>
+            <a href="/account" class="btn btn-danger">Account</a>
+            <a href="/logout" class="btn btn-danger">Log out</a>
+          <% end %>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+    </div>
+
+    <div>
+    <%= yield %>
+    </div>
+
+
+    <script src="https://unpkg.com/@popperjs/core@2.4.0/dist/umd/popper.min.js"></script>
+      <script>
             $(document).ready(function () {
                 $('#datePick').multiDatesPicker();
             });
-        </script>
-    </body>
+      </script>
+  </body>
+
 </html>
+
+

@@ -45,25 +45,57 @@ class UserRepository
 
     result_set = DatabaseConnection.exec_params(sql, params)
 
-    user = User.new
+    if result_set.ntuples == 0
+      return nil
+    else
+      user = User.new
 
-    record = result_set[0]
+      record = result_set[0]
 
-    user.id = record['id']
-    user.name = record['name']
-    user.email = record['email']
-    user.password = record['password']
+      user.id = record['id']
+      user.name = record['name']
+      user.email = record['email']
+      user.password = record['password']
 
-    return user
+      return user
+    end
   end
     
+  def find_by_id(id)
+    # Returns a specified user object
+    sql = 'SELECT * FROM users WHERE id = $1;'
+    params = [id]
+
+    result_set = DatabaseConnection.exec_params(sql, params)
+
+    if result_set.ntuples == 0
+      return nil
+    else
+      user = User.new
+
+      record = result_set[0]
+
+      user.id = record['id']
+      user.name = record['name']
+      user.email = record['email']
+      user.password = record['password']
+
+      return user
+    end
+  end
+
   def create(user)
     # Creates new user and adds it to database
     # Returns nothing
     encrypted_password = BCrypt::Password.create(user.password)
 
+<<<<<<< HEAD
     sql = 'INSERT INTO users (name, password, email) VALUES ($1, $2, $3);'
     params = [user.name, encrypted_password, user.email]
+=======
+    sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3)'
+    params = [user.name, user.email, encrypted_password]
+>>>>>>> 6cdd14b (Sign up page working)
 
     DatabaseConnection.exec_params(sql, params)
 
