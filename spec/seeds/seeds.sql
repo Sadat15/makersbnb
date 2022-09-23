@@ -17,7 +17,6 @@ INSERT INTO spaces (name, description, price_per_night, user_id) VALUES
 ('Room', 'Room in terraced house', 60, 1);
 
 
-
 INSERT INTO dates (date) VALUES
 ('2022-09-22'),
 ('2022-09-23'),

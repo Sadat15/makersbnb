@@ -22,6 +22,9 @@ class Application < Sinatra::Base
   get '/' do
     repo = SpaceRepository.new
     @spaces = repo.all
+    if session[:user_id] != nil
+      @session = session[:user_id]
+    end
     return erb(:index)
   end
 
@@ -50,12 +53,20 @@ class Application < Sinatra::Base
   get '/space/:id' do
     repo = SpaceRepository.new
     @space = repo.find_by_id_with_dates(params[:id])
+    user_repo = UserRepository.new
+    @host = user_repo.find_by_id(@space.user_id)
+    if session[:user_id] != nil
+      @session = session[:user_id]
+    end
     return erb(:space)
   end
 
   post '/book_space' do
+    if session[:user_id] != nil
+      @session = session[:user_id]
+    end
     booking = Booking.new
-    booking.date = params[:date]
+    booking.date_id = params[:date]
     booking.user_id = session[:user_id]
     booking.space_id = params[:space_id]
     booking.confirmed = false
@@ -66,6 +77,9 @@ class Application < Sinatra::Base
   end
 
   get '/login' do
+    if session[:user_id] != nil
+      @session = session[:user_id]
+    end
     if params[:error] == 'credentials_wrong'
       @error = true
     end
@@ -73,9 +87,11 @@ class Application < Sinatra::Base
   end
 
   post '/login' do
+    if session[:user_id] != nil
+      @session = session[:user_id]
+    end
     repo = UserRepository.new
     result = repo.sign_in(params[:email], params[:password])
-    
     if result == "successful"
       user = repo.find_by_email(params[:email])
       session[:user_id] = user.id
@@ -85,4 +101,11 @@ class Application < Sinatra::Base
     end
   end
 
+  get '/logout' do
+    if session[:user_id] != nil
+      @session = session[:user_id]
+    end
+    session.clear
+    redirect '/'
+  end
 end
