@@ -1,67 +1,88 @@
-<h1>Account page</h1>
-    <h3>Personal information</h3>
-    <p> <%= @user.name %></p>
-    <p><%= @user.email %><p>
-    
-<div>
-    <h3>Hosting</h3>
-    <form action="/add_space" method="post">
-        <div>
-            <label for="name">Name: </label>
-            <input type="text" name="name" id="name" required>
-        </div>
-        <div>
-            <label for="desc">Description:</label>
-            <textarea type="text" name="description" id="desc" required>
-            </textarea>
-        </div>
-        <div>
-            <label for="price">Price per night:</label>
-            <input type="number" name="price_per_night" id="price" required>
-        </div>
-        <div>
-            <input type="submit" value="Add place">
-        </div>
-    </form>
-</div>
-<div>
-    <h3>Your listings</h3>
-    <div>
-        <% if  @user_spaces == nil %>
-            <p>No listings available</p>
-        <% else %>
-            <% @user_spaces.each do |space| %>
-                <p><%= space.name %></p>
-                <p><%= space.description %></p>
-                <p><%= space.price_per_night %></p>
-
-            
-
-                <form action="/update_dates" method="POST" >
-                    <label  for="datePick">Add availability:</label>
-                    <input name="dates" type="text" id="datePick" required/>
-                    <input name="space" type="hidden" value= "<%= space.id %>">
-                    <input type="submit" value="Add dates">
-                </form>
-            <% end %>
-        <% end %>
+<div class="row justify-content-center">
+    <div class="alert alert-danger col-md-8 col-md-offset-2" align="center">
+        Welcome <%= @user.name %>
     </div>
 </div>
-<div>
-    <h3>Your booking requests</h3>
-    <div>
-        <% if @user_booking_requests == nil %>
-            <p>No bookings requested</p>
-        <% else %>
-            <% @user_booking_requests.each do |space| %>
-                <p><%= space.name %></p>
-                <p><%= space.description %></p>
-                <p><%= space.price_per_night %></p>
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h4>List new space</h4>
+
+        <form action="/add_space" method="post">
+            <div class="form-group">
+                <label for="name">Name: </label>
+              <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Lovely house">
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description: </label>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" type="text" placeholder="Describe your listing" name="description" id="desc" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="price_per_night">Price per night: </label>
+              <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="100">
+            </div>
+
+            <div>
+                <br>
+                <input type="submit" value="Add place" class="btn btn-danger">
+            </div>
+
+          </form>
+
+        
+      </div>
+      <div class="col-md-3">
+        <h4>Your listings</h4>
+        <div>
+            <% if  @user_spaces_without_dates == nil %>
+                <p>No listings available</p>
+            <% else %>
+                <% @user_spaces.each do |space| %>
+                    <p><%= space.name %></p>
+                    <p><%= space.description %></p>
+                    <p><%= space.price_per_night %></p>
+                    
+                    <form action="/update_dates" method="POST" >
+                        <label  for="datePick">Add availability:</label>
+                        <input name="dates" type="text" id="datePick" required/>
+                        <input name="space" type="hidden" value= "<%= space.id %>">
+                        <input type="submit" value="Add dates">
+                    </form>
+                <% end %>
             <% end %>
-        <% end %>    
+        </div>
+      </div>
+      <div class="col-md-3">
+        <h4>Your booking requests</h4>
+        <div>
+            <% if @user_booking_requests == nil %>
+                <p>No bookings requested</p>
+            <% else %>
+                <% @user_booking_requests.each do |space| %>
+                    <div class="card" style="width: 18rem;">
+                        <img src="/<%=space.id%>.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title"><%= space.name %></h5>
+                        <p class="card-text"><%= space.description %></p>
+                        <a href="/spaces/<%=space.id%>" class="btn btn-outline-danger">View</a>
+                        </div>
+                    </div>
+                <% end %>
+            <% end %>  
+
+
+
+
+  
+        </div>
+      </div>
+      <div class="col-md-3">
+        <h4>Requests received</h4>
+        ...
+      </div>
     </div>
 </div>
-<div>
-   <h3>Requests received</h3>
-   ...
-</div>
+
