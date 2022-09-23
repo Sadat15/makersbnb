@@ -101,15 +101,12 @@ class Application < Sinatra::Base
     
     repo.create(user)
 
-    return nil
-
-    redirect_to '/login'
+    return erb(:signup_sent)
   end  
 
   get '/login' do
     return erb(:login)
   end
-
 
   get '/space/:id' do
     repo = SpaceRepository.new
