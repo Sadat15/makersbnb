@@ -30,18 +30,10 @@
         <% if  @user_spaces_without_dates == nil %>
             <p>No listings available</p>
         <% else %>
-            <% @user_spaces_without_dates.each do |space| %>
+            <% @user_spaces.each do |space| %>
                 <p><%= space.name %></p>
                 <p><%= space.description %></p>
                 <p><%= space.price_per_night %></p>
-                <%  @user_spaces_with_dates.each do |space_2| %>
-                    <%if space_2 == space.id%>
-                        <%  space_2.dates.each do |date_id, date| %>
-                            <p> <%= date %></p>
-                        <% end %>
-                    <% end %>
-                <%end%>
-            
                 
                 <form action="/update_dates" method="POST" >
                     <label  for="datePick">Add availability:</label>

@@ -95,33 +95,33 @@ class SpaceRepository
     return space
   end
 
-  def find_by_user_id_with_dates(user_id)
+  # def find_by_user_id_with_dates(user_id)
     
-    sql = 'SELECT spaces.id AS space_id, name, description, price_per_night, user_id, dates.id AS date_id, dates.date FROM spaces JOIN spaces_dates ON spaces.id = spaces_dates.space_id JOIN dates ON dates.id = spaces_dates.date_id WHERE spaces.user_id = $1;'
+  #   sql = 'SELECT spaces.id AS space_id, name, description, price_per_night, user_id, dates.id AS date_id, dates.date FROM spaces JOIN spaces_dates ON spaces.id = spaces_dates.space_id JOIN dates ON dates.id = spaces_dates.date_id WHERE spaces.user_id = $1;'
     
-    sql_params= [user_id]
-    spaces = []
-    result_set = DatabaseConnection.exec_params(sql, sql_params)
-    result_set.each do |row|
-      next if spaces.any? { |space| space.id == row['space_id'] }
+  #   sql_params= [user_id]
+  #   spaces = []
+  #   result_set = DatabaseConnection.exec_params(sql, sql_params)
+  #   result_set.each do |row|
+  #     next if spaces.any? { |space| space.id == row['space_id'] }
       
-      space = Space.new
-      space.id = row['space_id']
-      space.user_id = row['user_id']
-      space.name = row['name']
-      space.description = row['description']
-      space.price_per_night = row['price_per_night']
-      result_set.each do |record|
-        space.dates[record['date_id']] = record['date']
-      end
-      spaces << space
-    end
-    return spaces
-  end
+  #     space = Space.new
+  #     space.id = row['space_id']
+  #     space.user_id = row['user_id']
+  #     space.name = row['name']
+  #     space.description = row['description']
+  #     space.price_per_night = row['price_per_night']
+  #     result_set.each do |record|
+  #       space.dates[record['date_id']] = record['date']
+  #     end
+  #     spaces << space
+  #   end
+  #   return spaces
+  # end
   
   def find_by_user_id(user_id)
     
-    sql = 'SELECT spaces.id AS space_id, name, description, price_per_night, user_id FROM spaces WHERE spaces.user_id = 1;'
+    sql = 'SELECT spaces.id AS space_id, name, description, price_per_night, user_id FROM spaces WHERE spaces.user_id = $1;'
     sql_params= [user_id]
     spaces = []
     result_set = DatabaseConnection.exec_params(sql, sql_params)

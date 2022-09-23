@@ -24,30 +24,26 @@ class Application < Sinatra::Base
   end
 
   get '/account' do 
-    # if session[:user_id] == nil
-    #   return redirect('/login')
-    # else
-      session[:user_id]= 1
+    if session[:user_id] == nil
+      return redirect('/login')
+    else
       space_repo = SpaceRepository.new
       booking_repo = BookingRepository.new
       user_repo = UserRepository.new
       @user = user_repo.find_by_user_id(session[:user_id])
-      @user_spaces_with_dates = space_repo.find_by_user_id_with_dates(session[:user_id])
-      @user_spaces_without_dates = space_repo.find_by_user_id(session[:user_id])
+      @user_spaces = space_repo.find_by_user_id(session[:user_id])
       @user_booking_requests = []
       result_set = booking_repo.find_by_user_id(session[:user_id])
       result_set.each do |booking|
         @user_booking_requests << space_repo.find_by_id(booking.space_id)
       end
-
-
       return erb(:account)
-    #end
+    end
   end
 
   post '/add_space' do
     space = Space.new
-    space.user_id = 1
+    space.user_id = session[:user_id]
     space.name = params[:name]
     space.description = params[:description]
     space.price_per_night = params[:price_per_night]
