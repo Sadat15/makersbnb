@@ -27,14 +27,16 @@
 <div>
     <h3>Your listings</h3>
     <div>
-        <% if  @user_spaces_without_dates == nil %>
+        <% if  @user_spaces == nil %>
             <p>No listings available</p>
         <% else %>
             <% @user_spaces.each do |space| %>
                 <p><%= space.name %></p>
                 <p><%= space.description %></p>
                 <p><%= space.price_per_night %></p>
-                
+
+            
+
                 <form action="/update_dates" method="POST" >
                     <label  for="datePick">Add availability:</label>
                     <input name="dates" type="text" id="datePick" required/>
