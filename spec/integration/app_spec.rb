@@ -1,5 +1,6 @@
-require_relative '../../app.rb'
+require './app'
 require 'rack/test'
+
 
 def reset_tables
   seed_sql = File.read('spec/seeds/seeds.sql')
@@ -33,6 +34,8 @@ describe Application do
       expect(response.body).to include("Flat in Central London")
       expect(response.body).to include("Room in terraced house")
       expect(response.body).to include("Lovely house at the seaside")
+      expect(response.body).to include('<a href="/login"><button>Log in/Log out</button></a>')
+      expect(response.body).to include('<a href="/signup"><button>Sign up</button></a>')
     end
   end
 

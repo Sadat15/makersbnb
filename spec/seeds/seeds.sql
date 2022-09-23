@@ -16,6 +16,7 @@ INSERT INTO spaces (name, description, price_per_night, user_id) VALUES
 -- the following space is linked to these dates, further down in the join table: "2022-10-01", "2022-10-02", "2022-10-03", "2022-10-04", "2022-10-05", "2022-10-06"
 ('Room', 'Room in terraced house', 60, 1);
 
+
 INSERT INTO dates (date) VALUES
 ('2022-09-22'),
 ('2022-09-23'),

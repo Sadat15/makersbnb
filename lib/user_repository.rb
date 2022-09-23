@@ -73,8 +73,13 @@ class UserRepository
     # Returns nothing
     encrypted_password = BCrypt::Password.create(user.password)
 
+<<<<<<< HEAD
     sql = 'INSERT INTO users (name, password, email) VALUES ($1, $2, $3);'
     params = [user.name, encrypted_password, user.email]
+=======
+    sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3)'
+    params = [user.name, user.email, encrypted_password]
+>>>>>>> 6cdd14b (Sign up page working)
 
     DatabaseConnection.exec_params(sql, params)
 
