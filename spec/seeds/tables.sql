@@ -16,6 +16,11 @@ CREATE TABLE spaces (
     constraint fk_user foreign key (user_id) references users(id) on delete cascade
 );
 
+CREATE TABLE dates (
+  id SERIAL PRIMARY KEY,
+  date date
+);
+
 CREATE TABLE bookings (
     id SERIAL PRIMARY KEY,
     date_id int,
@@ -25,11 +30,6 @@ CREATE TABLE bookings (
     constraint fk_user foreign key (user_id) references users(id) on delete cascade,
     constraint fk_space foreign key (space_id) references spaces(id) on delete cascade,
     constraint fk_date foreign key (date_id) references dates(id) on delete cascade
-);
-
-CREATE TABLE dates (
-  id SERIAL PRIMARY KEY,
-  date date
 );
 
 -- The Join Table

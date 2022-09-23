@@ -9,7 +9,7 @@ require_relative 'lib/booking'
 require_relative 'lib/booking_repository'
 require_relative 'lib/database_connection'
 
-DatabaseConnection.connect('makersbnb')
+DatabaseConnection.connect('makersbnb_test')
 
 
 class Application < Sinatra::Base
@@ -24,14 +24,16 @@ class Application < Sinatra::Base
   end
 
   get '/account' do 
-    if session[:user_id] == nil
-      return redirect('/login')
-    else
+    # if session[:user_id] == nil
+    #   return redirect('/login')
+    # else
+      session[:user_id]= 1
       space_repo = SpaceRepository.new
       booking_repo = BookingRepository.new
       user_repo = UserRepository.new
       @user = user_repo.find_by_user_id(session[:user_id])
-      @user_spaces = space_repo.find_by_user_id(session[:user_id])
+      @user_spaces_with_dates = space_repo.find_by_user_id_with_dates(session[:user_id])
+      @user_spaces_without_dates = space_repo.find_by_user_id(session[:user_id])
       @user_booking_requests = []
       result_set = booking_repo.find_by_user_id(session[:user_id])
       result_set.each do |booking|
@@ -40,30 +42,31 @@ class Application < Sinatra::Base
 
 
       return erb(:account)
-    end
+    #end
   end
 
   post '/add_space' do
     space = Space.new
-    space.user_id = session[:user_id]
+    space.user_id = 1
     space.name = params[:name]
     space.description = params[:description]
     space.price_per_night = params[:price_per_night]
     repo = SpaceRepository.new
-    repo.add(space)
+    repo.create(space)
     
     redirect '/account'
   end
  
-  post 'update_dates' do
-    space = params[:space]
+  post '/update_dates' do
+    space_id = params[:space]
     dates_array = params[:dates].split(",")
     dates = []
     dates_array.each do |date|
-      dates << Date.strptime(date, '%m/ %d/ %Y').strftime("%Y-%m-%d") 
+      dates << Date.strptime(date, '%m/ %d/ %Y').strftime('%Y-%m-%d').tr('"', "'") 
     end
+    
     repo = SpaceRepository.new
-    repo.add_available_dates(space, dates)
+    repo.add_available_dates(space_id, dates)
     redirect '/account'
   end
 

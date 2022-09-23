@@ -55,14 +55,14 @@ class SpaceRepository
     return nil
   end
 
-  def add_available_dates(space, dates)
+  def add_available_dates(space_id, dates)
     dates.each do |date|
-      sql1 = 'SELECT dates.id FROM dates WHERE date = $1'
+      sql1 = 'SELECT dates.id FROM dates WHERE date = $1;'
       sql_params1 = [date]
       result_set = DatabaseConnection.exec_params(sql1, sql_params1)
       date_id = result_set[0]['id']
       sql2 = 'INSERT INTO spaces_dates (space_id, date_id) VALUES ($1, $2);'
-      sql_params2 = [space.id, date_id]
+      sql_params2 = [space_id, date_id]
       DatabaseConnection.exec_params(sql2, sql_params2)
     end
     return nil
@@ -95,24 +95,49 @@ class SpaceRepository
     return space
   end
 
+  def find_by_user_id_with_dates(user_id)
+    
+    sql = 'SELECT spaces.id AS space_id, name, description, price_per_night, user_id, dates.id AS date_id, dates.date FROM spaces JOIN spaces_dates ON spaces.id = spaces_dates.space_id JOIN dates ON dates.id = spaces_dates.date_id WHERE spaces.user_id = $1;'
+    
+    sql_params= [user_id]
+    spaces = []
+    result_set = DatabaseConnection.exec_params(sql, sql_params)
+    result_set.each do |row|
+      next if spaces.any? { |space| space.id == row['space_id'] }
+      
+      space = Space.new
+      space.id = row['space_id']
+      space.user_id = row['user_id']
+      space.name = row['name']
+      space.description = row['description']
+      space.price_per_night = row['price_per_night']
+      result_set.each do |record|
+        space.dates[record['date_id']] = record['date']
+      end
+      spaces << space
+    end
+    return spaces
+  end
+  
   def find_by_user_id(user_id)
-    sql = 'SELECT * FROM spaces WHERE user_id = $1;'
+    
+    sql = 'SELECT spaces.id AS space_id, name, description, price_per_night, user_id FROM spaces WHERE spaces.user_id = 1;'
     sql_params= [user_id]
     spaces = []
     result_set = DatabaseConnection.exec_params(sql, sql_params)
     result_set.each do |row|
       space = Space.new
-      space.id = row['id']
+      space.id = row['space_id']
       space.user_id = row['user_id']
       space.name = row['name']
       space.description = row['description']
       space.price_per_night = row['price_per_night']
-      space.dates = row['dates']
-
       spaces << space
     end
     return spaces
   end
+
+
 
   def delete(id)
     sql = 'DELETE FROM spaces WHERE id = $1;'
