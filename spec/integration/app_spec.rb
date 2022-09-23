@@ -38,8 +38,35 @@ describe Application do
     end
   end
 
+  context 'GET /signup' do
+    it 'should get the sign up page' do
+      response = get('/signup')
+
+      expect(response.status).to eq 200
+      expect(response.body).to include('<form method="post" action="/signup">')
+      expect(response.body).to include('<label for="name">Full name:</label>')
+      expect(response.body).to include('<label for="email">Email address:</label>')
+      expect(response.body).to include('<label for="password">Password:</label>')
+
+    end
+  end
+
+  context 'POST /signup' do
+    it 'should add a new user to the database' do
+      response = post('/signup',
+      email: 'test@test.com',
+      name: 'Lucy',
+      password: '123456'
+      )
+
+      expect(response.status).to eq 200
+      expect(response.body).to include('<p>Sign up was successful.</p>')
+    end
+  end
+
+
   context 'GET /space/:id' do
-    it "should return a space listing by finding the id" do
+    xit "should return a space listing by finding the id" do
       response = get('/space/1')
       expect(response.status).to eq 200
       expect(response.body).to include('<h1>House by 2</h1>')
