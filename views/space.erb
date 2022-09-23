@@ -1,31 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
+<head>
+  <title>MakersBnB <%= @space.name %></title>
+</head>
 
-  <head>
-    <title>MakersBnB <%= @space.name %></title>
-  </head>
+<div class="container">
 
-  <body>
-    <h1><%= @space.name %> by <%= @space.user_id %></h1>
-    <!--user name , not user id?-->
-    <p>Description: <%= @space.description %></p>
-    <p>Price per night: £<%= @space.price_per_night %></p>
-    <p>Dates available: <% @space.dates.each do |date_id, date| %> <%= date %> <% end %>
-    </p>
-    <!--Calendar diary?-->
+      <div class="row">
+          <div class="col-md-2"></div>
+          <div class="col-md-8">
+              <div class="card bg-light mb-3 border-danger">
+                  <div class="card-body">    
+                    <img src="/<%=@space.id%>.jpg" class="card-img-top">
+                    <h4 class="card-title"><%= @space.name %> hosted by <%=@host.name%></h4>
+                    <p>Description: <%= @space.description %></p>
+                    <p>Price per night: £<%= @space.price_per_night %></p>
+                    <p>Dates available: <% @space.dates.each do |date_id, date| %> <%= date %> <% end %>
+                    
+                    <h4>Request to book this space</h4>
+                      <div class="form-group">
+                        <form method="POST" action="/book_space">
+                          <label for="date">Choose your date:</label>
+                          <select name="date">
+                            <% @space.dates.each do |date_id, date| %>
+                              <option value=<%= date_id %>><%= date %></option>
+                            <% end %>
+                          </select>
+                          <!-- hidden input type to send the space_id to the book_space route -->
+                          <input type = "hidden" name = "space_id" value = "<%= @space.id %>" />
+                          <input type="submit" value="Request booking" class="btn btn-danger" />
+                        </form>
+                      </div>
+                  </div>
+              </div>
+              <br>
+          </div>
+          <div class="col-md-2"></div>
+      </div>
 
-    <h2>Request to book this space</h2>
-    <form method="POST" action="/book_space">
-      <label for="date">Choose your date:</label>
-      <select name="date">
-        <% @space.dates.each do |date_id, date| %>
-          <option value=<%= date %>><%= date %></option>
-        <% end %>
-      </select>
-      <!-- hidden input type to send the space_id to the book_space route -->
-      <input type = "hidden" name = "space_id" value = "<%= @space.id %>" />
-      <input type="submit" value="Request booking"/>
-    </form>
-
-  </body>
-</html>
+</div>

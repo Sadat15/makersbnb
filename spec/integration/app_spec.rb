@@ -40,7 +40,6 @@ describe Application do
     it "should return a space listing by finding the id" do
       response = get('/space/1')
       expect(response.status).to eq 200
-      expect(response.body).to include('<h1>House by 2</h1>')
       expect(response.body).to include('<p>Description: Lovely house at the seaside</p>')
       expect(response.body).to include('<p>Price per night: £80</p>')
       expect(response.body).to include('Dates available:')
@@ -50,9 +49,9 @@ describe Application do
 
   context 'POST /book_space' do
     it "should return a page that tells you the booking request was successful" do
-      response = post('/book_space', date: '2022-10-05', user_id: 1, space_id: 1)
+      response = post('/book_space', date: '14', user_id: 1, space_id: 1)
       expect(response.status).to eq(200)
-      expect(response.body).to include('<p>Booking request sent successfully. Please await confirmation by the host.</p>')
+      expect(response.body).to include('Booking request sent successfully. Please await confirmation by the host.')
     end
   end
 
@@ -89,6 +88,18 @@ describe Application do
       expect(last_response.status).to be 200
       expect(last_response.body).to include("Error, please try again")
       expect(last_response.body).to include ("<input type='email' name='email' placeholder='Your email'>")
+    end
+  end
+
+  context 'GET /logout' do
+    it "logs a user out" do
+      response1 = post(
+        '/login',
+        email: 'jonas@somewhere.com',
+        password: 'lovelyday'
+        )
+      response2 = get('/logout')
+      expect(response2.status).to be 302
     end
   end
 end

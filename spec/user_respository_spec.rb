@@ -32,6 +32,18 @@ describe UserRepository do
       )
   end
 
+  it '#find finds one user specified by id' do
+    repo = UserRepository.new    
+    user = repo.find_by_id('2')
+    
+    expect(user.id).to eq('2')
+    expect(user.name).to eq('Anna')
+    expect(user.email).to eq('anna@world.com')
+    expect(user.password).to eq(
+      '$2a$12$YlqyPMdbTUMCOiISU834D.mXHMzrpBTIjDGbJwTAr5B/49ZViTAGK'
+      )
+  end
+
   it '#find returns nil if email doesnt exist' do
     repo = UserRepository.new    
     user = repo.find_by_email('anna3@world.com')

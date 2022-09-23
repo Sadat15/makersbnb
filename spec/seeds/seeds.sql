@@ -16,14 +16,6 @@ INSERT INTO spaces (name, description, price_per_night, user_id) VALUES
 -- the following space is linked to these dates, further down in the join table: "2022-10-01", "2022-10-02", "2022-10-03", "2022-10-04", "2022-10-05", "2022-10-06"
 ('Room', 'Room in terraced house', 60, 1);
 
-INSERT INTO bookings (date_id, user_id, space_id, confirmed) VALUES
--- actual date is '2022-10-05'
-(14, 1, 1, true),
--- actual date is '2022-10-07'
-(16, 3, 1, true),
--- actual date is '2022-10-02'
-(11, 2, 3, false);
-
 INSERT INTO dates (date) VALUES
 ('2022-09-22'),
 ('2022-09-23'),
@@ -277,6 +269,14 @@ INSERT INTO dates (date) VALUES
 ('2023-05-29'),
 ('2023-05-30'),
 ('2023-05-31');
+
+INSERT INTO bookings (date_id, user_id, space_id, confirmed) VALUES
+-- actual date is '2022-10-05'
+(14, 1, 1, true),
+-- actual date is '2022-10-07'
+(16, 3, 1, true),
+-- actual date is '2022-10-02'
+(11, 2, 3, false);
 
 INSERT INTO spaces_dates (space_id, date_id) VALUES
 (1, 14),

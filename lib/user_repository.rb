@@ -45,6 +45,29 @@ class UserRepository
     end
   end
     
+  def find_by_id(id)
+    # Returns a specified user object
+    sql = 'SELECT * FROM users WHERE id = $1;'
+    params = [id]
+
+    result_set = DatabaseConnection.exec_params(sql, params)
+
+    if result_set.ntuples == 0
+      return nil
+    else
+      user = User.new
+
+      record = result_set[0]
+
+      user.id = record['id']
+      user.name = record['name']
+      user.email = record['email']
+      user.password = record['password']
+
+      return user
+    end
+  end
+
   def create(user)
     # Creates new user and adds it to database
     # Returns nothing

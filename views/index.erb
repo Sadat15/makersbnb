@@ -1,21 +1,31 @@
-<div class="container">
-    <% @spaces.each do |space| %>
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <div class="card bg-light mb-3 border-danger">
-                    <div class="card-body">    
-                        <h4 class="card-title"><%= space.name %></h4>
-                        <h5><%= space.description %></h5>
-                        
-                        <img src="/<%=space.id%>.jpg" class="card-img-top">
-                        <p><br>Price per night is £<%= space.price_per_night %></p>
-                        <a href="/space/<%=space.id%>" class="btn btn-outline-danger">Book now</a>
-                    </div>
-                </div>
-                <br>
+
+  <div id="content-container" class="container">
+
+    <div class="row">
+      <div class="col-12">
+        <h2 class="display-5 text-center text-white text-uppercase">Portfolio</h2>
+      </div>
+    </div>
+
+    <div class="row">
+        <% @spaces.each do |space| %>
+        <div class="col-md-4 d-flex align-items-stretch">
+            <div class="card ">
+            <img class="card-img-top" src="/<%=space.id%>.jpg" alt="Card image cap">
+            <div class="card-footer">
+                <h4 class="card-title"><%= space.name %></h4>
+                <h5><%= space.description %></h5>
+                <p><br>Price per night is £<%= space.price_per_night %></p>
+                <% if @session == nil %>
+                    <a href="/login" class="btn btn-outline-danger">Book now</a>
+                <% else %>
+                    <a href="/space/<%=space.id%>" class="btn btn-outline-danger">Book now</a>
+                <% end %>
             </div>
-            <div class="col-md-2"></div>
+            </div>
         </div>
-    <% end %> 
-</div>
+        <% end %> 
+
+    </div>
+  </div>
+
