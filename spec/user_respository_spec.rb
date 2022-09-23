@@ -78,4 +78,11 @@ describe UserRepository do
 
     expect(result).to eq("successful")
   end
+
+  it 'finds user by id' do
+    repo = UserRepository.new
+    result = repo.find_by_user_id(1)
+    expect(result.name).to eq "Jonas"
+    expect(result.email).to eq "jonas@somewhere.com"
+  end
 end

@@ -67,6 +67,13 @@ describe SpaceRepository do
     expect(space.dates['16']).to eq '2022-10-07'
     expect(space.dates['54']).to eq '2022-11-15'
   end
+   
+  it "finds all spaces by user_id" do
+    repo = SpaceRepository.new
+    spaces = repo.find_by_user_id('1')
+    expect(spaces.first.description).to eq('Room in terraced house')
+    expect(spaces.length).to eq(1)
+  end
 
   it "deletes the space by its id" do
     repo = SpaceRepository.new

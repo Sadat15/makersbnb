@@ -22,6 +22,22 @@ class UserRepository
     return users
   end
 
+  def find_by_user_id(id)
+    sql = 'SELECT * FROM users WHERE id = $1;'
+    params = [id]
+
+    result_set = DatabaseConnection.exec_params(sql, params)
+
+    user = User.new
+    record = result_set[0]
+    user.id = record['id']
+    user.name = record['name']
+    user.email = record['email']
+    user.password = record['password']
+
+    return user
+  end
+
   def find_by_email(email)
     # Returns a specified user object
     sql = 'SELECT * FROM users WHERE email = $1;'
