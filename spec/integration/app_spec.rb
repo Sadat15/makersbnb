@@ -1,3 +1,6 @@
+require './app'
+require "rack/test"
+
 def reset_tables
   seed_sql = File.read('spec/seeds/seeds.sql')
   connection = PG.connect({ host: '127.0.0.1', dbname: 'makersbnb_test'})
@@ -30,8 +33,8 @@ describe Application do
       expect(response.body).to include("Flat in Central London")
       expect(response.body).to include("Room in terraced house")
       expect(response.body).to include("Lovely house at the seaside")
-      expect(response.body).to include('<a href="/login">Login</a>')
-      expect(response.body).to include('<a href="/signup">Sign-up</a>')
+      expect(response.body).to include('<a href="/login"><button>Log in/Log out</button></a>')
+      expect(response.body).to include('<a href="/signup"><button>Sign up</button></a>')
     end
   end
 
