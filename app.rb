@@ -30,6 +30,12 @@ class Application < Sinatra::Base
   end
 
   get '/account' do 
+    if session[:user_id] != nil
+      @session = session[:user_id]
+    else
+      return redirect('/login')
+    end
+
     if session[:user_id] == nil
       return redirect('/login')
     else
@@ -93,6 +99,7 @@ class Application < Sinatra::Base
 
   get '/login' do
     return erb(:login)
+  end
 
 
   get '/space/:id' do
