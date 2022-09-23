@@ -121,9 +121,10 @@ class SpaceRepository
   
   def find_by_user_id(user_id)
     
-    sql = 'SELECT spaces.id AS space_id, name, description, price_per_night, user_id FROM spaces WHERE spaces.user_id = 1;'
+    sql = 'SELECT spaces.id AS space_id, name, description, price_per_night, user_id FROM spaces WHERE spaces.user_id = $1;'
     sql_params= [user_id]
     spaces = []
+    
     result_set = DatabaseConnection.exec_params(sql, sql_params)
     result_set.each do |row|
       space = Space.new

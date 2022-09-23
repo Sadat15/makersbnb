@@ -42,7 +42,7 @@ class Application < Sinatra::Base
 
 
       return erb(:account)
-    #end
+    # end
   end
 
   post '/add_space' do
