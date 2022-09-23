@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>MakersBnB <%= @space.name %></title>
+  </head>
+
+  <body>
+    <h1><%= @space.name %> by <%= @space.user_id %></h1>
+    <!--user name , not user id?-->
+    <p>Description: <%= @space.description %></p>
+    <p>Price per night: £<%= @space.price_per_night %></p>
+    <p>Dates available: <%= @space.dates.join(', ') %></p>
+    <!--Calendar diary?-->
+
+    <h2>Request to book this space</h2>
+    <form method="POST" action="/book_space">
+      <label for="date">Choose your date:</label>
+      <select name="date">
+        <% @space.dates.each do |date_id, date| %>
+          <option value=<%= date %>><%= date %></option>
+        <% end %>
+      </select>
+      <!-- hidden input type to send the space_id to the book_space route -->
+      <input type = "hidden" name = "space_id" value = "<%= @space.id %>" />
+      <input type="submit" value="Request booking"/>
+    </form>
+
+  </body>
+</html>
