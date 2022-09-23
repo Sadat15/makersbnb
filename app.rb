@@ -49,6 +49,7 @@ class Application < Sinatra::Base
 
   get '/login' do
     return erb(:login)
+  end
 
   get '/space/:id' do
     repo = SpaceRepository.new
