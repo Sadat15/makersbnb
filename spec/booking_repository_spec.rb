@@ -43,8 +43,8 @@ describe BookingRepository do
     booking.space_id = '2'
     booking.date_id = '33'
     repo.create(booking)
-    result = repo.find_by_user_id('2')
-    expect(result.length).to eq 2
+    result = repo.find_by_user_id(2)
+    expect(result.length).to eq 3
     expect(result.last.confirmed).to be false
     expect(result.last.date).to eq '2022-10-25'
   end
@@ -64,9 +64,6 @@ describe BookingRepository do
     repo.confirm('3')
     result_after = repo.find_by_id('3')
     expect(result_before.confirmed).to eq false
-    expect(result_before.confirmed).to eq true
-    expect()
-
+    expect(result_after.confirmed).to eq true
   end
-
 end

@@ -44,15 +44,6 @@ class Application < Sinatra::Base
       user_repo = UserRepository.new
       @user = user_repo.find_by_user_id(session[:user_id])
       @user_spaces = space_repo.find_by_user_id(session[:user_id])
-      
-      # @user_spaces_with = []
-      # @user_spaces.each do |space|
-      #   if space.dates != nil
-      #     space = space_repo.find_by_id_with_dates(space.id)
-      #   end
-      #   @user_spaces_with << space
-      # end
-
       @user_booking_requests = []
       result_set = booking_repo.find_by_user_id(session[:user_id])
       result_set.each do |booking|

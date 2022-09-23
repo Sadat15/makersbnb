@@ -72,8 +72,8 @@ describe Application do
       response = get('/login')
       expect(response.status).to eq 200
       expect(response.body).to include ("<form action='/login' method='POST'>")
-      expect(response.body).to include ("<input type='email' name='email' placeholder='Your email'>")
-      expect(response.body).to include ("<input type='password' name='password' placeholder='Your password'>")
+      expect(response.body).to include ('<input type="email" class="form-control" name="email" placeholder="Enter email">')
+      expect(response.body).to include ('<input type="password" class="form-control" name="password" placeholder="Password">')
     end
   end
 
@@ -89,19 +89,20 @@ describe Application do
       expect(last_response.body).to include("Lovely house at the seaside")
       # expect(response.body).to include("Sign out")
     end
+  end
 
-    context 'GET /signup' do
-      it 'should get the sign up page' do
-        response = get('/signup')
-  
-        expect(response.status).to eq 200
-        expect(response.body).to include('<form method="post" action="/signup">')
-        expect(response.body).to include('<label for="name">Full name:</label>')
-        expect(response.body).to include('<label for="email">Email address:</label>')
-        expect(response.body).to include('<label for="password">Password:</label>')
-  
-      end
+  context 'GET /signup' do
+    it 'should get the sign up page' do
+      response = get('/signup')
+
+      expect(response.status).to eq 200
+      expect(response.body).to include('<form method="post" action="/signup">')
+      expect(response.body).to include('<input type="text" class="form-control" name="name" placeholder="James Smith">')
+      expect(response.body).to include('<input type="email" class="form-control" name="email" placeholder="james@makersbnb.com">')
+      expect(response.body).to include('<input type="password" class="form-control" name="password" placeholder="Password">')
+
     end
+  end
   
     context 'POST /signup' do
       it 'should add a new user to the database' do
@@ -114,7 +115,7 @@ describe Application do
         expect(response.status).to eq 200
         expect(response.body).to include('<p>Sign up was successful.</p>')
       end
-    end
+
 
     xit "sends and checks the login information" do
       response = post(

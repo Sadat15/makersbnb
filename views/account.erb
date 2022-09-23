@@ -37,19 +37,26 @@
       <div class="col-md-3">
         <h4>Your listings</h4>
         <div>
-            <% if  @user_spaces_without_dates == nil %>
+             <% if  @user_spaces == nil %>
                 <p>No listings available</p>
             <% else %>
                 <% @user_spaces.each do |space| %>
-                    <p><%= space.name %></p>
-                    <p><%= space.description %></p>
-                    <p><%= space.price_per_night %></p>
+
+                    <div class="card" style="width: 18rem;">
+                        <img src="/<%=space.id%>.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                        <h5 class="card-title"><%= space.name %></h5>
+                        <p class="card-text"><%= space.description %></p>
+                        <a href="/space/<%=space.id%>" class="btn btn-outline-danger">View</a>
+                        </div>
+                    </div>
                     
                     <form action="/update_dates" method="POST" >
+                    <br>
                         <label  for="datePick">Add availability:</label>
                         <input name="dates" type="text" id="datePick" required/>
                         <input name="space" type="hidden" value= "<%= space.id %>">
-                        <input type="submit" value="Add dates">
+                        <button type="submit" value="Add dates" class="btn btn-danger">Add dates</button>
                     </form>
                 <% end %>
             <% end %>
@@ -67,7 +74,7 @@
                         <div class="card-body">
                         <h5 class="card-title"><%= space.name %></h5>
                         <p class="card-text"><%= space.description %></p>
-                        <a href="/spaces/<%=space.id%>" class="btn btn-outline-danger">View</a>
+                        <a href="/space/<%=space.id%>" class="btn btn-outline-danger">View</a>
                         </div>
                     </div>
                 <% end %>
