@@ -1,0 +1,65 @@
+<h1>Account page</h1>
+    <h3>Personal information</h3>
+    <p> <%= @user.name %></p>
+    <p><%= @user.email %><p>
+    
+<div>
+    <h3>Hosting</h3>
+    <form action="/add_space" method="post">
+        <div>
+            <label for="name">Name: </label>
+            <input type="text" name="name" id="name" required>
+        </div>
+        <div>
+            <label for="desc">Description:</label>
+            <textarea type="text" name="description" id="desc" required>
+            </textarea>
+        </div>
+        <div>
+            <label for="price">Price per night:</label>
+            <input type="number" name="price_per_night" id="price" required>
+        </div>
+        <div>
+            <input type="submit" value="Add place">
+        </div>
+    </form>
+</div>
+<div>
+    <h3>Your listings</h3>
+    <div>
+        <% if  @user_spaces_without_dates == nil %>
+            <p>No listings available</p>
+        <% else %>
+            <% @user_spaces.each do |space| %>
+                <p><%= space.name %></p>
+                <p><%= space.description %></p>
+                <p><%= space.price_per_night %></p>
+                
+                <form action="/update_dates" method="POST" >
+                    <label  for="datePick">Add availability:</label>
+                    <input name="dates" type="text" id="datePick" required/>
+                    <input name="space" type="hidden" value= "<%= space.id %>">
+                    <input type="submit" value="Add dates">
+                </form>
+            <% end %>
+        <% end %>
+    </div>
+</div>
+<div>
+    <h3>Your booking requests</h3>
+    <div>
+        <% if @user_booking_requests == nil %>
+            <p>No bookings requested</p>
+        <% else %>
+            <% @user_booking_requests.each do |space| %>
+                <p><%= space.name %></p>
+                <p><%= space.description %></p>
+                <p><%= space.price_per_night %></p>
+            <% end %>
+        <% end %>    
+    </div>
+</div>
+<div>
+   <h3>Requests received</h3>
+   ...
+</div>

@@ -22,6 +22,22 @@ class UserRepository
     return users
   end
 
+  def find_by_user_id(id)
+    sql = 'SELECT * FROM users WHERE id = $1;'
+    params = [id]
+
+    result_set = DatabaseConnection.exec_params(sql, params)
+
+    user = User.new
+    record = result_set[0]
+    user.id = record['id']
+    user.name = record['name']
+    user.email = record['email']
+    user.password = record['password']
+
+    return user
+  end
+
   def find_by_email(email)
     # Returns a specified user object
     sql = 'SELECT * FROM users WHERE email = $1;'
@@ -73,8 +89,8 @@ class UserRepository
     # Returns nothing
     encrypted_password = BCrypt::Password.create(user.password)
 
-    sql = 'INSERT INTO users (name, email, password) VALUES ($1, $2, $3)'
-    params = [user.name, user.email, encrypted_password]
+    sql = 'INSERT INTO users (name, password, email) VALUES ($1, $2, $3);'
+    params = [user.name, encrypted_password, user.email]
 
     DatabaseConnection.exec_params(sql, params)
 
