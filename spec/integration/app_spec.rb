@@ -1,5 +1,6 @@
 require './app'
-require "rack/test"
+require 'rack/test'
+
 
 def reset_tables
   seed_sql = File.read('spec/seeds/seeds.sql')
@@ -45,7 +46,8 @@ describe Application do
       expect(response.body).to include('<h1>House by 2</h1>')
       expect(response.body).to include('<p>Description: Lovely house at the seaside</p>')
       expect(response.body).to include('<p>Price per night: £80</p>')
-      expect(response.body).to include('<p>Dates available: 2022-10-05, 2022-10-07, 2022-11-15</p>')
+      expect(response.body).to include('Dates available:')
+      expect(response.body).to include('2022-10-05')
     end
   end 
 
@@ -54,6 +56,42 @@ describe Application do
       response = post('/book_space', date: '2022-10-05', user_id: 1, space_id: 1)
       expect(response.status).to eq(200)
       expect(response.body).to include('<p>Booking request sent successfully. Please await confirmation by the host.</p>')
+    end
+  end
+
+  context 'GET /login' do
+    it "displays a login page" do
+      response = get('/login')
+      expect(response.status).to eq 200
+      expect(response.body).to include ("<form action='/login' method='POST'>")
+      expect(response.body).to include ("<input type='email' name='email' placeholder='Your email'>")
+      expect(response.body).to include ("<input type='password' name='password' placeholder='Your password'>")
+    end
+  end
+
+  context 'POST /login' do
+    it "sends and checks the login information" do
+      response = post(
+        '/login',
+        email: 'jonas@somewhere.com',
+        password: 'lovelyday'
+        )
+      follow_redirect!
+      expect(last_response.status).to be 200
+      expect(last_response.body).to include("Lovely house at the seaside")
+      # expect(response.body).to include("Sign out")
+    end
+
+    it "sends and checks the login information" do
+      response = post(
+        '/login',
+        email: 'jonas@somewhere.com',
+        password: 'lovelyday123'
+        )
+      follow_redirect!
+      expect(last_response.status).to be 200
+      expect(last_response.body).to include("Error, please try again")
+      expect(last_response.body).to include ("<input type='email' name='email' placeholder='Your email'>")
     end
   end
 end

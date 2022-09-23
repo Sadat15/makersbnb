@@ -17,6 +17,8 @@ class Application < Sinatra::Base
     register Sinatra::Reloader
   end
 
+  enable :sessions
+
   get '/' do
     repo = SpaceRepository.new
     @spaces = repo.all
@@ -61,6 +63,26 @@ class Application < Sinatra::Base
     repo.create(booking)
     return erb(:request_sent)
 
+  end
+
+  get '/login' do
+    if params[:error] == 'credentials_wrong'
+      @error = true
+    end
+    return erb(:login)
+  end
+
+  post '/login' do
+    repo = UserRepository.new
+    result = repo.sign_in(params[:email], params[:password])
+    
+    if result == "successful"
+      user = repo.find_by_email(params[:email])
+      session[:user_id] = user.id
+      redirect '/'
+    else
+      redirect '/login?error=credentials_wrong'
+    end
   end
 
 end

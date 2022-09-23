@@ -29,16 +29,20 @@ class UserRepository
 
     result_set = DatabaseConnection.exec_params(sql, params)
 
-    user = User.new
+    if result_set.ntuples == 0
+      return nil
+    else
+      user = User.new
 
-    record = result_set[0]
+      record = result_set[0]
 
-    user.id = record['id']
-    user.name = record['name']
-    user.email = record['email']
-    user.password = record['password']
+      user.id = record['id']
+      user.name = record['name']
+      user.email = record['email']
+      user.password = record['password']
 
-    return user
+      return user
+    end
   end
     
   def create(user)

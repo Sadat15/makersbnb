@@ -10,7 +10,8 @@
     <!--user name , not user id?-->
     <p>Description: <%= @space.description %></p>
     <p>Price per night: £<%= @space.price_per_night %></p>
-    <p>Dates available: <%= @space.dates.join(', ') %></p>
+    <p>Dates available: <% @space.dates.each do |date_id, date| %> <%= date %> <% end %>
+    </p>
     <!--Calendar diary?-->
 
     <h2>Request to book this space</h2>
