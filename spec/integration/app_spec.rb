@@ -34,8 +34,9 @@ describe Application do
       expect(response.body).to include("Flat in Central London")
       expect(response.body).to include("Room in terraced house")
       expect(response.body).to include("Lovely house at the seaside")
-      expect(response.body).to include('<a href="/login"><button>Log in/Log out</button></a>')
-      expect(response.body).to include('<a href="/signup"><button>Sign up</button></a>')
+      expect(response.body).to include('<a href="/signup" class="btn btn-danger">Sign up</a>')
+      expect(response.body).to include('<a href="/login" class="btn btn-danger">Log in</a>')
+
     end
   end
 
@@ -81,7 +82,33 @@ describe Application do
       # expect(response.body).to include("Sign out")
     end
 
-    it "sends and checks the login information" do
+    context 'GET /signup' do
+      it 'should get the sign up page' do
+        response = get('/signup')
+  
+        expect(response.status).to eq 200
+        expect(response.body).to include('<form method="post" action="/signup">')
+        expect(response.body).to include('<label for="name">Full name:</label>')
+        expect(response.body).to include('<label for="email">Email address:</label>')
+        expect(response.body).to include('<label for="password">Password:</label>')
+  
+      end
+    end
+  
+    context 'POST /signup' do
+      it 'should add a new user to the database' do
+        response = post('/signup',
+        email: 'test@test.com',
+        name: 'Lucy',
+        password: '123456'
+        )
+  
+        expect(response.status).to eq 200
+        expect(response.body).to include('<p>Sign up was successful.</p>')
+      end
+    end
+
+    xit "sends and checks the login information" do
       response = post(
         '/login',
         email: 'jonas@somewhere.com',

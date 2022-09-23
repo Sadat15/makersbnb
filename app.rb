@@ -42,9 +42,7 @@ class Application < Sinatra::Base
     
     repo.create(user)
 
-    return nil
-
-    redirect_to '/login'
+    return erb(:signup_sent)
   end  
 
   get '/login' do
